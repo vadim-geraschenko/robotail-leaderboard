@@ -18,10 +18,12 @@
 }
 
 .app-stage {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 28px;
+  display: flex;
   min-height: calc(100vh - 80px);
+}
+
+.app-stage.single {
+  align-items: stretch;
 }
 
 .loading-state {
@@ -35,6 +37,7 @@
 .leaderboard-screen {
   display: flex;
   flex-direction: column;
+  width: 100%;
   min-width: 0;
   overflow: hidden;
   border: 1px solid rgba(142, 214, 255, 0.34);
@@ -43,6 +46,7 @@
   box-shadow:
     0 24px 70px rgba(0, 0, 0, 0.42),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  animation: scoreboard-slide 420ms ease-out both;
 }
 
 .leaderboard-screen.global {
@@ -174,6 +178,18 @@
   }
 
   .app-stage {
-    grid-template-columns: 1fr;
+    min-height: calc(100vh - 48px);
+  }
+}
+
+@keyframes scoreboard-slide {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
