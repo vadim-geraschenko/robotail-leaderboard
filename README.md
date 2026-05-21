@@ -1,73 +1,106 @@
-# React + TypeScript + Vite
+# Arcade Leaderboard Display
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Fullscreen React prototype for a public arcade leaderboard display. The app shows five local machine leaderboards and one global leaderboard, rotates through paged results automatically, and uses local JSON data only.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React
+- TypeScript
+- Vite
+- Local JSON data
+- CSS for layout and transition animation
 
-## React Compiler
+## Commands
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
+npm run build
+npm run preview
+npm run lint
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The development server starts a Vite app. If the default port is busy, Vite will choose the next available port.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Data Source
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Leaderboard data is stored in `src/data/leaderboards.json`.
+
+The file contains exactly five arcade machines:
+
+- Призовой аркадный автомат «4 в ряд»
+- Автомат морской бой «Бродяги морей»
+- Аркадный автомат «Миллениум»
+- «Ретро игры — Драки» аркадный автомат
+- «Ретро игры — Гонки» аркадный автомат
+
+Each machine has at least 25 results. Each result contains:
+
+```ts
+{
+  id: string
+  playerName: string
+  wins: number
+  score: number
+}
 ```
+
+Data loading is isolated in `src/services/leaderboardService.ts`, so the local JSON source can later be replaced by an API call without moving leaderboard logic into UI components.
+
+## Ranking Logic
+
+The primary ranking metric is `wins`.
+
+`score` is still displayed and used as a tie-breaker, but it is not the primary metric because scores can have different scales across different arcade machines.
+
+Local leaderboards:
+
+- use only one machine's results;
+- sort by `wins` descending;
+- break ties by `score` descending;
+- take top 25;
+- paginate as `1–10`, `11–20`, `21–25`.
+
+Global leaderboard:
+
+- groups all results by `playerName`;
+- sums `wins` into `totalWins`;
+- sums `score` into `totalScore`;
+- tracks how many machines each player appears on;
+- sorts by `totalWins` descending, then `totalScore` descending;
+- takes top 25;
+- does not duplicate the same player.
+
+## Display Cycle
+
+The app shows one page at a time and rotates automatically:
+
+```txt
+Machine 1 p1
+Machine 1 p2
+Machine 1 p3
+Machine 2 p1
+...
+Machine 5 p3
+Global p1
+Global p2
+Global p3
+repeat
+```
+
+The page duration is configured in `src/App.tsx` as `PAGE_DISPLAY_DURATION_MS`.
+
+## Scope
+
+This is a frontend-only prototype. It intentionally does not include:
+
+- backend;
+- database;
+- authentication;
+- admin panel;
+- editing or adding results from the UI;
+- real API requests;
+- WebSocket;
+- hardware integration;
+- persistent storage;
+- routing.
