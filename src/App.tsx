@@ -70,6 +70,7 @@ function renderDisplaySlide(slide: DisplaySlide) {
 function App() {
   const [leaderboards, setLeaderboards] = useState<PreparedLeaderboards | null>(null)
   const [activeSlideIndex, setActiveSlideIndex] = useState(0)
+  const [isRotationPaused, setIsRotationPaused] = useState(false)
 
   useEffect(() => {
     void getPreparedLeaderboards().then(setLeaderboards)
@@ -78,7 +79,7 @@ function App() {
   const displaySlides = leaderboards ? buildDisplaySlides(leaderboards) : []
 
   useEffect(() => {
-    if (displaySlides.length === 0) {
+    if (displaySlides.length === 0 || isRotationPaused) {
       return undefined
     }
 
@@ -89,7 +90,7 @@ function App() {
     return () => {
       window.clearInterval(timerId)
     }
-  }, [displaySlides.length])
+  }, [displaySlides.length, isRotationPaused])
 
   if (!leaderboards) {
     return (
@@ -103,6 +104,16 @@ function App() {
 
   return (
     <main className="app-shell">
+      <button
+        className="dx-pause-button"
+        type="button"
+        aria-pressed={isRotationPaused}
+        onClick={() => setIsRotationPaused((currentValue) => !currentValue)}
+      >
+        <span className="dx-pause-button__tag">TEMP DX</span>
+        <span>{isRotationPaused ? 'Продолжить ротацию' : 'Пауза ротации'}</span>
+        <span className="dx-pause-button__note">позже скрыть</span>
+      </button>
       <div className="app-stage single">{renderDisplaySlide(activeSlide)}</div>
     </main>
   )
