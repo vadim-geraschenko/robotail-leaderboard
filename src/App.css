@@ -334,6 +334,7 @@
 }
 
 .leaderboard-table th {
+  box-sizing: border-box;
   height: 24px;
   padding: 0 20px 3px;
   color: #f6fbff;
@@ -357,7 +358,8 @@
 }
 
 .leaderboard-table td {
-  height: calc((100cqh - 119px) / 10);
+  box-sizing: border-box;
+  height: calc((100cqh - 108px) / 10);
   padding: 0 24px;
   border-top: 1px solid rgba(47, 170, 255, 0.8);
   border-bottom: 1px solid rgba(47, 170, 255, 0.72);
