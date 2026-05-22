@@ -3,6 +3,9 @@ import type {
   RankedGlobalLeaderboardEntry,
   RankedMachineResult,
 } from '../../types/leaderboard'
+import bronzeRankSprite from '../../assets/top-3/bronze.png'
+import goldRankSprite from '../../assets/top-3/gold.png'
+import silverRankSprite from '../../assets/top-3/silver.png'
 
 type LeaderboardTableProps =
   | {
@@ -13,6 +16,30 @@ type LeaderboardTableProps =
       kind: 'global'
       page: LeaderboardPage<RankedGlobalLeaderboardEntry>
     }
+
+const rankSpriteByPlace = new Map<number, string>([
+  [1, goldRankSprite],
+  [2, silverRankSprite],
+  [3, bronzeRankSprite],
+])
+
+function getTopRankClass(rank: number) {
+  return rank <= 3 ? `top-rank top-rank-${rank}` : undefined
+}
+
+function RankCell({ rank }: { rank: number }) {
+  const rankSprite = rankSpriteByPlace.get(rank)
+
+  return (
+    <td className="rank-cell">
+      {rankSprite ? (
+        <img className="rank-sprite" src={rankSprite} alt={`${rank} место`} />
+      ) : (
+        rank
+      )}
+    </td>
+  )
+}
 
 export function LeaderboardTable(props: LeaderboardTableProps) {
   if (props.kind === 'global') {
@@ -30,8 +57,8 @@ export function LeaderboardTable(props: LeaderboardTableProps) {
           </thead>
           <tbody>
             {props.page.entries.map((entry) => (
-              <tr key={entry.playerName} className={entry.rank <= 3 ? 'top-rank' : undefined}>
-                <td className="rank-cell">{entry.rank}</td>
+              <tr key={entry.playerName} className={getTopRankClass(entry.rank)}>
+                <RankCell rank={entry.rank} />
                 <td className="player-cell">{entry.playerName}</td>
                 <td className="numeric metric-cell">{entry.totalWins}</td>
                 <td className="numeric metric-cell">{entry.machinesCount}</td>
@@ -57,8 +84,8 @@ export function LeaderboardTable(props: LeaderboardTableProps) {
         </thead>
         <tbody>
           {props.page.entries.map((entry) => (
-            <tr key={entry.id} className={entry.rank <= 3 ? 'top-rank' : undefined}>
-              <td className="rank-cell">{entry.rank}</td>
+            <tr key={entry.id} className={getTopRankClass(entry.rank)}>
+              <RankCell rank={entry.rank} />
               <td className="player-cell">{entry.playerName}</td>
               <td className="numeric metric-cell">{entry.wins}</td>
               <td className="numeric metric-cell">{entry.score}</td>
