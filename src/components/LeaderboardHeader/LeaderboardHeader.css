@@ -1,0 +1,111 @@
+.leaderboard-header {
+  position: relative;
+  padding-top: 4px;
+}
+
+.leaderboard-title,
+.leaderboard-name,
+.leaderboard-range {
+  color: #fff;
+  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.leaderboard-title {
+  margin: 0 0 3px;
+  font-size: clamp(36px, 3.7vw, 58px);
+  line-height: 1.02;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 4px rgba(255, 255, 255, 0.88),
+    0 0 14px rgba(78, 143, 255, 0.72),
+    0 0 30px rgba(37, 102, 255, 0.52);
+}
+
+.leaderboard-marquee {
+  position: relative;
+  min-height: 68px;
+  display: grid;
+  grid-template-columns: 145px minmax(0, 1fr) 255px;
+  align-items: center;
+  column-gap: 22px;
+  padding: 6px 28px 6px 16px;
+  border: 3px solid var(--cyan);
+  border-right-color: var(--accent);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 58% 50%, rgba(255, 42, 206, 0.16), transparent 34%),
+    radial-gradient(circle at 16% 46%, rgba(38, 120, 255, 0.2), transparent 32%),
+    linear-gradient(90deg, rgba(3, 12, 31, 0.98), rgba(7, 5, 28, 0.92));
+  box-shadow:
+    0 0 12px rgba(22, 157, 255, 0.95),
+    0 0 28px rgba(255, 39, 205, 0.38),
+    inset 0 0 26px rgba(28, 125, 255, 0.32);
+}
+
+.leaderboard-marquee::before {
+  position: absolute;
+  inset: 12px;
+  pointer-events: none;
+  content: "";
+  border: 1px solid rgba(255, 41, 213, 0.74);
+  clip-path: polygon(0 0, 94% 0, 100% 44%, 100% 100%, 6% 100%, 0 56%);
+}
+
+.leaderboard-symbol {
+  position: relative;
+  z-index: 1;
+  height: 68px;
+  display: grid;
+  place-items: center;
+}
+
+.leaderboard-symbol img {
+  max-width: 134px;
+  max-height: 118px;
+  object-fit: contain;
+  transform: translateY(-34px);
+  filter: drop-shadow(0 0 8px var(--accent))
+    drop-shadow(0 0 16px rgba(38, 145, 255, 0.88));
+}
+
+.leaderboard-name {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  font-size: clamp(34px, 3.6vw, 60px);
+  line-height: 1.08;
+  text-shadow:
+    0 0 3px rgba(255, 255, 255, 0.74),
+    0 0 11px rgba(122, 166, 255, 0.64),
+    0 0 22px rgba(63, 119, 255, 0.42),
+    0 0 38px rgba(255, 56, 207, 0.24);
+}
+
+.leaderboard-range {
+  position: relative;
+  z-index: 1;
+  justify-self: end;
+  font-size: clamp(29px, 2.55vw, 44px);
+  line-height: 1.12;
+  text-align: right;
+  white-space: nowrap;
+  text-shadow:
+    0 0 3px rgba(255, 255, 255, 0.74),
+    0 0 11px color-mix(in srgb, var(--accent) 62%, transparent),
+    0 0 23px color-mix(in srgb, var(--accent) 38%, transparent),
+    0 0 36px color-mix(in srgb, var(--cyan) 26%, transparent);
+}
+
+@media (max-width: 1500px) {
+  .leaderboard-marquee {
+    grid-template-columns: 150px minmax(0, 1fr) 230px;
+    min-height: 74px;
+  }
+
+  .leaderboard-symbol {
+    height: 74px;
+  }
+}

@@ -5,12 +5,12 @@ import { buildLocalLeaderboards } from '../utils/buildLocalLeaderboards'
 
 const localLeaderboardsData = leaderboardsData as LeaderboardsData
 
-export async function loadLeaderboardsData(): Promise<LeaderboardsData> {
+export function loadLeaderboardsData(): LeaderboardsData {
   return localLeaderboardsData
 }
 
-export async function getPreparedLeaderboards(): Promise<PreparedLeaderboards> {
-  const data = await loadLeaderboardsData()
+export function getPreparedLeaderboards(): PreparedLeaderboards {
+  const data = loadLeaderboardsData()
 
   return {
     localLeaderboards: buildLocalLeaderboards(data),

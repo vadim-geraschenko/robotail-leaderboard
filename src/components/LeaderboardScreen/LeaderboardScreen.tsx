@@ -1,3 +1,4 @@
+import './LeaderboardScreen.css'
 import { LeaderboardHeader } from '../LeaderboardHeader/LeaderboardHeader'
 import { LeaderboardTable } from '../LeaderboardTable/LeaderboardTable'
 import type {
@@ -7,33 +8,15 @@ import type {
 } from '../../types/leaderboard'
 
 type LeaderboardScreenProps =
-  | {
-      kind: 'local'
-      title: string
-      page: LeaderboardPage<RankedMachineResult>
-    }
-  | {
-      kind: 'global'
-      title: string
-      page: LeaderboardPage<RankedGlobalLeaderboardEntry>
-    }
-
-export function LeaderboardScreen(props: LeaderboardScreenProps) {
-  if (props.kind === 'global') {
-    return (
-      <section className="leaderboard-screen global">
-        <LeaderboardHeader
-          title={props.title}
-          kind={props.kind}
-          rangeLabel={props.page.rangeLabel}
-        />
-        <LeaderboardTable kind={props.kind} page={props.page} />
-      </section>
-    )
+  {
+    kind: 'local' | 'global'
+    title: string
+    page: LeaderboardPage<RankedMachineResult> | LeaderboardPage<RankedGlobalLeaderboardEntry>
   }
 
+export function LeaderboardScreen(props: LeaderboardScreenProps) {
   return (
-    <section className="leaderboard-screen local">
+    <section className={`leaderboard-screen ${props.kind}`}>
       <LeaderboardHeader
         title={props.title}
         kind={props.kind}
