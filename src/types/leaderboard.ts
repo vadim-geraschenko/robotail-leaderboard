@@ -1,21 +1,21 @@
-export interface MachineResult {
+export type MachineResult = {
   id: string
   playerName: string
   wins: number
   score: number
 }
 
-export interface Machine {
+export type Machine = {
   id: string
   name: string
   results: MachineResult[]
 }
 
-export interface LeaderboardsData {
+export type LeaderboardsData = {
   machines: Machine[]
 }
 
-export interface GlobalLeaderboardEntry {
+export type GlobalLeaderboardEntry = {
   playerName: string
   totalWins: number
   totalScore: number
@@ -23,36 +23,10 @@ export interface GlobalLeaderboardEntry {
   machines: string[]
 }
 
-export interface RankedMachineResult extends MachineResult {
-  rank: number
-}
+export type RankedMachineResult = MachineResult & { rank: number }
+export type RankedGlobalLeaderboardEntry = GlobalLeaderboardEntry & { rank: number }
 
-export interface RankedGlobalLeaderboardEntry extends GlobalLeaderboardEntry {
-  rank: number
-}
-
-export interface LeaderboardPage<T> {
-  pageIndex: number
+export type LeaderboardPage<T> = {
   rangeLabel: string
-  startRank: number
-  endRank: number
   entries: T[]
-}
-
-export interface LocalLeaderboard {
-  machineId: string
-  machineName: string
-  entries: RankedMachineResult[]
-  pages: LeaderboardPage<RankedMachineResult>[]
-}
-
-export interface GlobalLeaderboard {
-  title: string
-  entries: RankedGlobalLeaderboardEntry[]
-  pages: LeaderboardPage<RankedGlobalLeaderboardEntry>[]
-}
-
-export interface PreparedLeaderboards {
-  localLeaderboards: LocalLeaderboard[]
-  globalLeaderboard: GlobalLeaderboard
 }

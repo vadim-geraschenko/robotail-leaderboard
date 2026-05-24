@@ -1,9 +1,8 @@
 .leaderboard-header {
-  position: relative;
   padding-top: 4px;
 }
 
-.leaderboard-title,
+.leaderboard-header h1,
 .leaderboard-name,
 .leaderboard-range {
   color: #fff;
@@ -12,9 +11,9 @@
   letter-spacing: 0;
 }
 
-.leaderboard-title {
+.leaderboard-header h1 {
   margin: 0 0 3px;
-  font-size: clamp(36px, 3.7vw, 58px);
+  font-size: clamp(42px, 4.35vw, 76px);
   line-height: 1.02;
   text-align: center;
   text-transform: uppercase;
@@ -26,9 +25,9 @@
 
 .leaderboard-marquee {
   position: relative;
-  min-height: 68px;
+  min-height: 82px;
   display: grid;
-  grid-template-columns: 145px minmax(0, 1fr) 255px;
+  grid-template-columns: 190px minmax(0, 1fr) 310px;
   align-items: center;
   column-gap: 22px;
   padding: 6px 28px 6px 16px;
@@ -55,27 +54,19 @@
 }
 
 .leaderboard-symbol {
-  position: relative;
   z-index: 1;
-  height: 68px;
-  display: grid;
-  place-items: center;
-}
-
-.leaderboard-symbol img {
-  max-width: 134px;
-  max-height: 118px;
+  height: 150px;
+  max-width: 170px;
+  justify-self: center;
   object-fit: contain;
-  transform: translateY(-34px);
-  filter: drop-shadow(0 0 8px var(--accent))
-    drop-shadow(0 0 16px rgba(38, 145, 255, 0.88));
+  transform: translateY(-43px);
+  filter: drop-shadow(0 0 8px var(--accent)) drop-shadow(0 0 16px rgba(38, 145, 255, 0.88));
 }
 
 .leaderboard-name {
-  position: relative;
   z-index: 1;
   min-width: 0;
-  font-size: clamp(34px, 3.6vw, 60px);
+  font-size: clamp(42px, 4.25vw, 74px);
   line-height: 1.08;
   text-shadow:
     0 0 3px rgba(255, 255, 255, 0.74),
@@ -85,10 +76,9 @@
 }
 
 .leaderboard-range {
-  position: relative;
   z-index: 1;
   justify-self: end;
-  font-size: clamp(29px, 2.55vw, 44px);
+  font-size: clamp(34px, 3vw, 54px);
   line-height: 1.12;
   text-align: right;
   white-space: nowrap;
@@ -101,11 +91,7 @@
 
 @media (max-width: 1500px) {
   .leaderboard-marquee {
-    grid-template-columns: 150px minmax(0, 1fr) 230px;
-    min-height: 74px;
-  }
-
-  .leaderboard-symbol {
-    height: 74px;
+    grid-template-columns: 170px minmax(0, 1fr) 250px;
+    min-height: 78px;
   }
 }

@@ -88,7 +88,7 @@ Global p3
 repeat
 ```
 
-The page duration is configured in `src/App.tsx` as `PAGE_DISPLAY_DURATION_MS`.
+The page duration is configured in `src/App.tsx` as `PAGE_DURATION_MS`.
 
 ## Scope
 

@@ -1,42 +1,26 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
-import { LeaderboardScreen } from './components/LeaderboardScreen/LeaderboardScreen'
-import { getPreparedLeaderboards } from './services/leaderboardService'
-import { buildDisplaySlides } from './utils/buildDisplaySlides'
+import { LeaderboardScreen } from './components/LeaderboardScreen'
+import { getDisplaySlides } from './services/leaderboardService'
 
-const PAGE_DISPLAY_DURATION_MS = 5000
+const PAGE_DURATION_MS = 5000
 
 function App() {
-  const leaderboards = useMemo(() => getPreparedLeaderboards(), [])
-  const displaySlides = useMemo(() => buildDisplaySlides(leaderboards), [leaderboards])
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0)
+  const slides = useMemo(() => getDisplaySlides(), [])
+  const [activeIndex, setActiveIndex] = useState(0)
+  const slide = slides[activeIndex]
 
   useEffect(() => {
-    if (displaySlides.length === 0) {
-      return undefined
-    }
+    const timer = window.setInterval(() => {
+      setActiveIndex((index) => (index + 1) % slides.length)
+    }, PAGE_DURATION_MS)
 
-    const timerId = window.setInterval(() => {
-      setActiveSlideIndex((currentIndex) => (currentIndex + 1) % displaySlides.length)
-    }, PAGE_DISPLAY_DURATION_MS)
-
-    return () => {
-      window.clearInterval(timerId)
-    }
-  }, [displaySlides.length])
-
-  const activeSlide = displaySlides[activeSlideIndex]
+    return () => window.clearInterval(timer)
+  }, [slides.length])
 
   return (
     <main className="app-shell">
-      <div className="app-stage">
-        <LeaderboardScreen
-          key={activeSlide.id}
-          kind={activeSlide.kind}
-          title={activeSlide.title}
-          page={activeSlide.page}
-        />
-      </div>
+      <LeaderboardScreen key={slide.id} slide={slide} />
     </main>
   )
 }

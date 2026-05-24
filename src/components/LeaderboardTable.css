@@ -1,17 +1,15 @@
 .leaderboard-table-wrap {
   position: relative;
   min-height: 0;
-  overflow: hidden;
   padding: 5px 18px 0;
+  overflow: hidden;
   container-type: size;
   border: 3px solid var(--cyan);
   border-radius: 8px;
   background:
     linear-gradient(90deg, rgba(0, 30, 85, 0.4) 1px, transparent 1px),
     linear-gradient(180deg, rgba(0, 26, 75, 0.64), rgba(0, 5, 24, 0.72));
-  background-size:
-    25% 100%,
-    auto;
+  background-size: 25% 100%, auto;
   box-shadow:
     0 0 14px rgba(21, 151, 255, 0.86),
     inset 0 0 30px rgba(20, 93, 216, 0.24);
@@ -44,7 +42,7 @@
 
 .leaderboard-table th,
 .leaderboard-table td {
-  box-sizing: border-box;
+  color: #fff;
   font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
   font-weight: 900;
   letter-spacing: 0;
@@ -53,12 +51,9 @@
 .leaderboard-table th {
   height: 24px;
   padding: 0 20px 3px;
-  color: #f6fbff;
-  font-size: clamp(20px, 1.42vw, 27px);
+  font-size: clamp(23px, 1.65vw, 31px);
   text-align: center;
-  text-shadow:
-    0 0 10px rgba(255, 255, 255, 0.72),
-    0 0 16px #377dff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.72), 0 0 16px #377dff;
 }
 
 .leaderboard-table th:first-child,
@@ -66,23 +61,20 @@
   width: 150px;
 }
 
-.leaderboard-table th.numeric,
-.leaderboard-table td.numeric {
+.numeric {
   text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 
 .leaderboard-table td {
-  height: calc((100cqh - 108px) / 10);
+  height: calc((100cqh - 148px) / 10);
   padding: 0 24px;
   border-top: 1px solid rgba(47, 170, 255, 0.8);
   border-bottom: 1px solid rgba(47, 170, 255, 0.72);
   background: linear-gradient(180deg, rgba(0, 31, 85, 0.66), rgba(0, 12, 46, 0.8));
-  color: #fff;
-  font-size: clamp(21px, 1.68vw, 32px);
+  font-size: clamp(24px, 1.88vw, 36px);
   line-height: 1;
-  text-shadow:
-    0 0 7px rgba(255, 255, 255, 0.42),
-    0 3px 0 rgba(0, 0, 0, 0.5);
+  text-shadow: 0 0 7px rgba(255, 255, 255, 0.42), 0 3px 0 rgba(0, 0, 0, 0.5);
 }
 
 .leaderboard-table td:first-child {
@@ -95,62 +87,16 @@
   border-radius: 0 8px 8px 0;
 }
 
-.leaderboard-table tr.top-rank {
-  position: relative;
-  border-radius: 7px;
-  outline: 2px solid var(--rank-row-edge);
-  outline-offset: -2px;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.07), transparent 16% 82%, rgba(255, 255, 255, 0.035)),
-    linear-gradient(180deg, color-mix(in srgb, var(--rank-row-edge) 20%, transparent), var(--rank-row-fill) 58%, rgba(0, 0, 0, 0.1));
-  filter: drop-shadow(0 0 9px var(--rank-row-glow));
-  box-shadow:
-    inset 0 0 14px color-mix(in srgb, var(--rank-row-edge) 20%, transparent),
-    0 0 8px var(--rank-row-glow);
-}
-
-.leaderboard-table tr.top-rank td {
-  position: relative;
-  z-index: 1;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-.leaderboard-table tr.top-rank-2 {
-  --rank-row-glow: rgba(212, 39, 255, 0.7);
-  --rank-row-fill: rgba(83, 0, 121, 0.24);
-  --rank-row-edge: rgba(212, 39, 255, 0.9);
-  --rank-sprite-filter: brightness(1.2) contrast(1.18) saturate(1.15)
-    drop-shadow(0 0 8px rgba(212, 39, 255, 0.95))
-    drop-shadow(0 0 18px rgba(176, 27, 255, 0.72));
-}
-
-.leaderboard-table tr.top-rank-3 {
-  --rank-row-glow: rgba(129, 56, 255, 0.7);
-  --rank-row-fill: rgba(38, 0, 126, 0.24);
-  --rank-row-edge: rgba(129, 56, 255, 0.9);
-  --rank-sprite-filter: brightness(1.22) contrast(1.2) saturate(1.14)
-    drop-shadow(0 0 8px rgba(129, 56, 255, 0.96))
-    drop-shadow(0 0 18px rgba(92, 35, 255, 0.74));
-}
-
 .rank-cell {
   position: relative;
-  color: #fff;
   text-align: center;
   font-variant-numeric: tabular-nums;
 }
 
-.leaderboard-table tr.top-rank .rank-cell {
-  padding: 0 14px;
-}
-
-.rank-sprite {
+.rank-cell img {
   position: absolute;
   top: 50%;
   left: 50%;
-  display: block;
   width: min(100px, calc(100% - 18px));
   height: min(100px, calc(100cqh / 10 + 6px));
   object-fit: contain;
@@ -165,6 +111,41 @@
   white-space: nowrap;
 }
 
-.metric-cell {
-  font-variant-numeric: tabular-nums;
+.top-rank {
+  position: relative;
+  border-radius: 7px;
+  outline: 2px solid var(--rank-row-edge);
+  outline-offset: -2px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07), transparent 16% 82%, rgba(255, 255, 255, 0.035)),
+    linear-gradient(180deg, color-mix(in srgb, var(--rank-row-edge) 20%, transparent), var(--rank-row-fill) 58%, rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 0 9px var(--rank-row-glow));
+  box-shadow:
+    inset 0 0 14px color-mix(in srgb, var(--rank-row-edge) 20%, transparent),
+    0 0 8px var(--rank-row-glow);
+}
+
+.top-rank td {
+  position: relative;
+  z-index: 1;
+  border: 0;
+  background: transparent;
+}
+
+.top-rank-2 {
+  --rank-row-glow: rgba(212, 39, 255, 0.7);
+  --rank-row-fill: rgba(83, 0, 121, 0.24);
+  --rank-row-edge: rgba(212, 39, 255, 0.9);
+  --rank-sprite-filter: brightness(1.2) contrast(1.18) saturate(1.15)
+    drop-shadow(0 0 8px rgba(212, 39, 255, 0.95))
+    drop-shadow(0 0 18px rgba(176, 27, 255, 0.72));
+}
+
+.top-rank-3 {
+  --rank-row-glow: rgba(129, 56, 255, 0.7);
+  --rank-row-fill: rgba(38, 0, 126, 0.24);
+  --rank-row-edge: rgba(129, 56, 255, 0.9);
+  --rank-sprite-filter: brightness(1.22) contrast(1.2) saturate(1.14)
+    drop-shadow(0 0 8px rgba(129, 56, 255, 0.96))
+    drop-shadow(0 0 18px rgba(92, 35, 255, 0.74));
 }
