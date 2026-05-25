@@ -9,7 +9,9 @@
   background:
     linear-gradient(90deg, rgba(0, 30, 85, 0.4) 1px, transparent 1px),
     linear-gradient(180deg, rgba(0, 26, 75, 0.64), rgba(0, 5, 24, 0.72));
-  background-size: 25% 100%, auto;
+  background-size:
+    25% 100%,
+    auto;
   box-shadow:
     0 0 14px rgba(21, 151, 255, 0.86),
     inset 0 0 30px rgba(20, 93, 216, 0.24);
@@ -20,7 +22,10 @@
   inset: 0;
   pointer-events: none;
   content: "";
-  background-image: radial-gradient(rgba(34, 126, 255, 0.28) 1px, transparent 1px);
+  background-image: radial-gradient(
+    rgba(34, 126, 255, 0.28) 1px,
+    transparent 1px
+  );
   background-size: 10px 10px;
   opacity: 0.25;
 }
@@ -34,10 +39,51 @@
     drop-shadow(0 0 18px rgba(255, 20, 156, 0.72));
   position: relative;
   z-index: 1;
+  display: grid;
+  grid-template-rows: auto 1fr;
   width: 100%;
+  height: 100%;
   border-collapse: separate;
   border-spacing: 0 6px;
   table-layout: fixed;
+  padding-bottom: 10px;
+}
+
+.leaderboard-table thead,
+.leaderboard-table tbody {
+  display: block;
+  min-height: 0;
+}
+
+.leaderboard-table tbody {
+  height: 100%;
+}
+
+.leaderboard-table tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.leaderboard-table tbody tr {
+  position: relative;
+  height: 10%;
+  overflow: hidden;
+  border-radius: 8px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 31, 85, 0.66),
+    rgba(0, 12, 46, 0.8)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(47, 170, 255, 0.8),
+    inset 0 -1px 0 rgba(47, 170, 255, 0.72),
+    inset 2px 0 0 #0cc7ff,
+    inset -2px 0 0 #0cc7ff;
+}
+
+.leaderboard-table tbody.page-scroll {
+  animation: table-page-scroll 760ms cubic-bezier(0.2, 0.82, 0.2, 1) both;
 }
 
 .leaderboard-table th,
@@ -53,7 +99,9 @@
   padding: 0 20px 3px;
   font-size: clamp(23px, 1.65vw, 31px);
   text-align: center;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.72), 0 0 16px #377dff;
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.72),
+    0 0 16px #377dff;
 }
 
 .leaderboard-table th:first-child,
@@ -67,23 +115,22 @@
 }
 
 .leaderboard-table td {
-  height: calc((100cqh - 148px) / 10);
   padding: 0 24px;
-  border-top: 1px solid rgba(47, 170, 255, 0.8);
-  border-bottom: 1px solid rgba(47, 170, 255, 0.72);
-  background: linear-gradient(180deg, rgba(0, 31, 85, 0.66), rgba(0, 12, 46, 0.8));
+  border: 0;
+  background: transparent;
   font-size: clamp(24px, 1.88vw, 36px);
   line-height: 1;
-  text-shadow: 0 0 7px rgba(255, 255, 255, 0.42), 0 3px 0 rgba(0, 0, 0, 0.5);
+  text-shadow:
+    0 0 7px rgba(255, 255, 255, 0.42),
+    0 3px 0 rgba(0, 0, 0, 0.5);
+  text-align: center;
 }
 
 .leaderboard-table td:first-child {
-  border-left: 2px solid #0cc7ff;
   border-radius: 8px 0 0 8px;
 }
 
 .leaderboard-table td:last-child {
-  border-right: 2px solid #0cc7ff;
   border-radius: 0 8px 8px 0;
 }
 
@@ -111,14 +158,24 @@
   white-space: nowrap;
 }
 
-.top-rank {
+.leaderboard-table tbody tr.top-rank {
   position: relative;
   border-radius: 7px;
   outline: 2px solid var(--rank-row-edge);
   outline-offset: -2px;
   background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.07), transparent 16% 82%, rgba(255, 255, 255, 0.035)),
-    linear-gradient(180deg, color-mix(in srgb, var(--rank-row-edge) 20%, transparent), var(--rank-row-fill) 58%, rgba(0, 0, 0, 0.1));
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.07),
+      transparent 16% 82%,
+      rgba(255, 255, 255, 0.035)
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--rank-row-edge) 20%, transparent),
+      var(--rank-row-fill) 58%,
+      rgba(0, 0, 0, 0.1)
+    );
   filter: drop-shadow(0 0 9px var(--rank-row-glow));
   box-shadow:
     inset 0 0 14px color-mix(in srgb, var(--rank-row-edge) 20%, transparent),
@@ -148,4 +205,29 @@
   --rank-sprite-filter: brightness(1.22) contrast(1.2) saturate(1.14)
     drop-shadow(0 0 8px rgba(129, 56, 255, 0.96))
     drop-shadow(0 0 18px rgba(92, 35, 255, 0.74));
+}
+
+@keyframes table-page-scroll {
+  0% {
+    opacity: 0.2;
+    transform: translateY(62%);
+    filter: brightness(1.22) saturate(1.12);
+  }
+
+  58% {
+    opacity: 1;
+    transform: translateY(-2.5%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: brightness(1) saturate(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leaderboard-table tbody.page-scroll {
+    animation: none;
+  }
 }

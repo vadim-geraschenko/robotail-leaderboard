@@ -12,6 +12,7 @@ type Entry = RankedMachineResult | RankedGlobalLeaderboardEntry
 type Props = {
   kind: 'local' | 'global'
   page: LeaderboardPage<Entry>
+  transition: 'screen-switch' | 'page-scroll'
 }
 
 const rankSprites = [goldRank, silverRank, bronzeRank]
@@ -32,7 +33,7 @@ function Rank({ rank }: { rank: number }) {
   )
 }
 
-export function LeaderboardTable({ kind, page }: Props) {
+export function LeaderboardTable({ kind, page, transition }: Props) {
   return (
     <div className="leaderboard-table-wrap">
       <table className="leaderboard-table">
@@ -48,7 +49,7 @@ export function LeaderboardTable({ kind, page }: Props) {
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody key={page.rangeLabel} className={transition}>
           {page.entries.map((entry) => (
             <tr
               key={isGlobal(entry) ? entry.playerName : entry.id}
